@@ -1,6 +1,6 @@
 {
     "name": "session-knex-pg",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "A session store using Knex.js for PostgreSQL",
     "author": "cesarrdzs",
     "keywords": [
@@ -10,17 +10,17 @@
         "postgresql"
     ],
     "main": "index.js",
-    "preferGlobal": true,    
+    "preferGlobal": true,
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "repository": {
-	"type": "git",
-	"url": "git+https://github.com/cesarrdzs/session-knex-pg"
+        "type": "git",
+        "url": "git+https://github.com/cesarrdzs/session-knex-pg"
     },
     "license": "MIT",
     "bugs": {
-	"url": "https://github.com/cesarrdzs/session-knex-pg/issues"
+        "url": "https://github.com/cesarrdzs/session-knex-pg/issues"
     },
-    "homepage": "https://github.com/cesarrdzs/session-knex-pg#readme"    
+    "homepage": "https://github.com/cesarrdzs/session-knex-pg#readme"
 }
