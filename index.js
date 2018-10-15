@@ -117,8 +117,9 @@ module.exports = class KnexStore extends Store {
         this.waitForSync().then(() => {
             this.knex(this.options.tableName).withSchema(this.options.schemaName)
                 .where('id', sid)
-                .del();
-                if (cb) return cb(null);
+                .del().then(() => {
+		    if (cb) return cb(null);
+		});                
         }).catch(err => {
             if (cb) return cb(err);
         });
