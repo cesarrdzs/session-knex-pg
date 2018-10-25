@@ -74,6 +74,8 @@ module.exports = class KnexStore extends Store {
                 })
                 .then(rows => {
                     if (!rows || rows.length === 0) return cb(null, null);
+		    let sess = JSON.parse(rows[0].sess);
+		    if (sess.cookie == undefined) return cb(null, null);
                     return cb(null, JSON.parse(rows[0].sess));
                 }).catch(err => {
                     return cb(err, null);
@@ -84,7 +86,7 @@ module.exports = class KnexStore extends Store {
     set(sid, sess, cb) {
         this.waitForSync().then(() => {
             const expires = getExpireTime(sess.cookie.maxAge);
-
+	    sess.cookie.expires = expires;
             this.knex(this.options.tableName).withSchema(this.options.schemaName)
                 .where('id', sid)
                 .then(rows => {
@@ -92,7 +94,7 @@ module.exports = class KnexStore extends Store {
                         this.knex(this.options.tableName).withSchema(this.options.schemaName)
                             .where('id', sid)
                             .update({
-                                data: this.knex.raw("ENCODE(CONVERT_TO(?, 'UTF-8'), 'BASE64')", sess),
+                                data: this.knex.raw("ENCODE(CONVERT_TO(?, 'UTF-8'), 'BASE64')", JSON.parse(sess)),
                                 time_updated: expires
                             }).then(() => {
                                 if (cb) return cb();
@@ -101,7 +103,7 @@ module.exports = class KnexStore extends Store {
                         this.knex(this.options.tableName).withSchema(this.options.schemaName)
                             .insert({
                                 id: sid,
-                                data: this.knex.raw("ENCODE(CONVERT_TO(?, 'UTF-8'), 'BASE64')", sess),
+                                data: this.knex.raw("ENCODE(CONVERT_TO(?, 'UTF-8'), 'BASE64')", JSON.parse(sess)),
                                 time_updated: expires
                             }).then(() => {
                                 if (cb) return cb();
@@ -119,7 +121,7 @@ module.exports = class KnexStore extends Store {
                 .where('id', sid)
                 .del().then(() => {
 		    if (cb) return cb(null);
-		});                
+		});
         }).catch(err => {
             if (cb) return cb(err);
         });
