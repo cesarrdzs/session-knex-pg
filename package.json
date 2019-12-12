@@ -22,5 +22,14 @@
     "bugs": {
         "url": "https://github.com/cesarrdzs/session-knex-pg/issues"
     },
-    "homepage": "https://github.com/cesarrdzs/session-knex-pg#readme"
+    "homepage": "https://github.com/cesarrdzs/session-knex-pg#readme",
+    "dependencies": {},
+    "devDependencies": {
+        "eslint": "^6.7.2",
+        "eslint-config-standard": "^14.1.0",
+        "eslint-plugin-import": "^2.19.1",
+        "eslint-plugin-node": "^10.0.0",
+        "eslint-plugin-promise": "^4.2.1",
+        "eslint-plugin-standard": "^4.0.1"
+    }
 }
