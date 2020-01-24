@@ -75,7 +75,7 @@ module.exports = class KnexStore extends Store {
             if (!rows || rows.length === 0) return cb(null, null)
             const sess = JSON.parse(rows[0].sess)
             if (sess.cookie === undefined) return cb(null, null)
-            return cb(null, JSON.parse(rows[0].sess))
+            return cb(null, sess)
         } catch (error) {
             return cb(error, null)
         }
@@ -95,7 +95,7 @@ module.exports = class KnexStore extends Store {
                 await this.knex(this.options.tableName).withSchema(this.options.schemaName)
                     .where('id', sid)
                     .update({
-                        data: this.knex.raw("ENCODE(CONVERT_TO(?, 'UTF-8'), 'BASE64')", JSON.parse(sess)),
+                        data: this.knex.raw("ENCODE(CONVERT_TO(?, 'UTF-8'), 'BASE64')", JSON.stringify(sess)),
                         time_updated: expires
                     })
                 if (cb) return cb()
@@ -103,7 +103,7 @@ module.exports = class KnexStore extends Store {
                 await this.knex(this.options.tableName).withSchema(this.options.schemaName)
                     .insert({
                         id: sid,
-                        data: this.knex.raw("ENCODE(CONVERT_TO(?, 'UTF-8'), 'BASE64')", JSON.parse(sess)),
+                        data: this.knex.raw("ENCODE(CONVERT_TO(?, 'UTF-8'), 'BASE64')", JSON.stringify(sess)),
                         time_updated: expires
                     })
                 if (cb) return cb()
