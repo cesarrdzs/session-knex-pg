@@ -1,6 +1,6 @@
 {
     "name": "session-knex-pg",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "description": "A session store using Knex.js for PostgreSQL",
     "author": "cesarrdzs",
     "keywords": [
