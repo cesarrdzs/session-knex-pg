@@ -117,7 +117,7 @@ module.exports = class KnexStore extends Store {
         try {
             await this.waitForSync()
 
-            this.knex(this.options.tableName).withSchema(this.options.schemaName)
+            await this.knex(this.options.tableName).withSchema(this.options.schemaName)
                 .where('id', sid)
                 .del()
 
@@ -125,16 +125,6 @@ module.exports = class KnexStore extends Store {
         } catch (error) {
             throw new Error(error)
         }
-
-        // this.waitForSync().then(() => {
-        //     this.knex(this.options.tableName).withSchema(this.options.schemaName)
-        //         .where('id', sid)
-        //         .del().then(() => {
-        //             if (cb) return cb(null)
-        //         })
-        // }).catch(err => {
-        //     if (cb) return cb(err)
-        // })
     }
 
     async gc () {
@@ -149,12 +139,6 @@ module.exports = class KnexStore extends Store {
         } catch (error) {
             throw new Error(error)
         }
-
-        // return this.waitForSync().then(() => {
-        //     return this.knex(this.options.tableName).withSchema(this.options.schemaName)
-        //         .where('time_updated', '<', currentTimestamp())
-        //         .del()
-        // })
     }
 
     async touch (sid, sess, cb) {
@@ -166,17 +150,6 @@ module.exports = class KnexStore extends Store {
             .update('time_updated', expires)
 
         if (cb) cb(null)
-
-        // this.waitForSync().then(() => {
-        //     this.knex(this.options.tableName).withSchema(this.options.schemaName)
-        //         .where('id', sid)
-        //         .update('time_updated', expires)
-        //         .then(() => {
-        //             if (cb) cb(null)
-        //         })
-        // }).catch(err => {
-        //     if (cb) cb(err)
-        // })
     }
 }
 
